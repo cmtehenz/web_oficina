@@ -75,6 +75,7 @@ export function Header() {
           </Box>
           <Avatar size="md" name="Gustavo Costa" src="https://github.com/cmtehenz.png" />
         </Flex>
+      
       </Flex>
     </Flex>
   );
