@@ -5,6 +5,7 @@ type User = {
   id: string;
   name: string;
   email: string;
+  whatsapp: string;
   createdAt: string;
 }
 
@@ -27,6 +28,7 @@ export async function getUsers(page: number): Promise<GetUsersResponse>{
       id: user.id,
       name: user.name,
       email: user.email,
+      whatsapp: user.whatsapp,
       createdAt: new Date(user.createdAt).toLocaleDateString('pt-BR', {
         day: '2-digit',
         month: 'long',

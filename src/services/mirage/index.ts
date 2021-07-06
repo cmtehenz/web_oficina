@@ -6,6 +6,7 @@ type User = {
   name: string,
   email: string,
   created_at: string,
+  whatsapp: string,
 }
 
 export function makeServer(){
@@ -25,6 +26,9 @@ export function makeServer(){
         createdAt() {
           return faker.date.recent(10);
         },
+        whatsapp() {
+          return faker.phone.phoneNumber();
+        }
       })
     },
 
