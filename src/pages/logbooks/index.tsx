@@ -22,10 +22,15 @@ import { RiAddLine } from "react-icons/ri";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
+import { useLogbooks } from "../../services/hooks/useLogbooks";
 
 
 export default function LoogbookList(){
+  const [page, setPage] = useState(1);
   const [full, setFull] = useState(false);
+
+  const { data, isLoading, isFetching, error } = useLogbooks(page);
+
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
@@ -40,8 +45,8 @@ export default function LoogbookList(){
         <Box flex="1" borderRadius={8} bg="gray.800" p="8">
           <Flex mb="8" justify="space-between" align="center">
             <Heading size="lg" fontWeight="normal">
-              Usuários
-              {/* { !isLoading && isFetching && <Spinner size="sm" color="gray.500" ml="4" />} */}
+              Diário
+              { !isLoading && isFetching && <Spinner size="sm" color="gray.500" ml="4" />}
             </Heading>
             <Link href="/users/create" passHref>
               <Button
@@ -56,11 +61,11 @@ export default function LoogbookList(){
             </Link>
           </Flex>
 
-          { false ? (
+          { isLoading ? (
             <Flex justify="center">
               <Spinner />
             </Flex>
-          ): false ? (
+          ): error ? (
             <Flex justify="center">
               <Text>Falha ao obter dados dos usuários</Text>
             </Flex>
@@ -98,39 +103,45 @@ export default function LoogbookList(){
             </Thead>
 
             <Tbody>
-              <Tr>
-                <Td>26/06/2021</Td>
-                <Td>SJKD</Td>
-                <Td>SJKD</Td>
-                <Td>12:00</Td>
-                { full && <Td>12:08</Td> }
-                { full && <Td>12:20</Td> }
-                { full && <Td>12:28</Td> }
-                { full && <Td>0,2</Td> }
-                { full && <Td>-</Td> }
-                { full && <Td>-</Td> }
-                { full && <Td>-</Td> }
-                <Td>0,2</Td>
-                { full && <Td>354</Td> }
-                { full && <Td>1</Td> }
-                { full && <Td>-</Td> }
-                <Td>1</Td>
-                <Td>0,87</Td>
-                <Td>0,5</Td>
-                <Td>4,8</Td>
-                <Td>2426</Td>
-                { full && <Td>PV</Td> }
-                { full && <Td>118302/SJUM</Td> }
-                { full && <Td>-</Td> }
-                { full && <Td>Assinatura</Td> }
-              </Tr>
+              { data.logbooks.map(log => {
+                return (
+                  <Tr>
+                    <Td>{log.date}</Td>
+                    <Td>{log.from}</Td>
+                    <Td>{log.to}</Td>
+                    <Td>{log.partida}</Td>
+                    { full && <Td>{log.decolagem}</Td> }
+                    { full && <Td>{log.pouso}</Td> }
+                    { full && <Td>{log.corte}</Td> }
+                    { full && <Td>{log.diurno}</Td> }
+                    { full && <Td>{log.noturno}</Td> }
+                    { full && <Td>{log.ifrr}</Td> }
+                    { full && <Td>{log.ifrc}</Td> }
+                    <Td>{log.total}</Td>
+                    { full && <Td>{log.combustivel}</Td> }
+                    { full && <Td>{log.pob}</Td> }
+                    { full && <Td>{log.carga}</Td> }
+                    <Td>{log.pousos}</Td>
+                    <Td>{log.ng}</Td>
+                    <Td>{log.ntl}</Td>
+                    <Td>{log.usage}</Td>
+                    <Td>{log.vemd}</Td>
+                    { full && <Td>{log.nat}</Td> }
+                    { full && <Td>{log.pic}</Td> }
+                    { full && <Td>{log.sic}</Td> }
+                    { full && <Td>{log.rubrica}</Td> }
+                  </Tr>
+                )
+              })}
+
             </Tbody>
 
             </Table>
             <Pagination
-              totalCountOfRegisters={200}
-              curruntPage={1}
-              onPageChange={() =>{}}
+              registersPerPage={8}
+              totalCountOfRegisters={data.totalCount}
+              curruntPage={page}
+              onPageChange={setPage}
             />
             </>
           )}
