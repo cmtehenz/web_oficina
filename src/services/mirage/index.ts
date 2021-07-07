@@ -1,4 +1,4 @@
-import { createServer, Factory, Model, Response } from 'miragejs';
+import { ActiveModelSerializer, createServer, Factory, Model, Response } from 'miragejs';
 import faker from 'faker';
 faker.locale = 'pt_BR';
 
@@ -38,6 +38,10 @@ type Logbook = {
 
 export function makeServer(){
   const server = createServer({
+    serializers: {
+      application: ActiveModelSerializer,
+    },
+
     models: {
       user: Model.extend<Partial<User>>({}),
       logbook: Model.extend<Partial<Logbook>>({})
@@ -136,7 +140,7 @@ export function makeServer(){
     },
 
     seeds(server){
-      server.createList('user', 200);
+      server.createList('user', 3);
       server.createList('logbook', 200);
     },
 
