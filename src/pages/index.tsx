@@ -3,8 +3,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "../components/Form/Input";
-import { signIn, useSession } from "next-auth/client";
+import { signIn as signInGit, useSession } from "next-auth/client";
 import { useRouter } from 'next/router'
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 type SignInFormData = {
   email: string;
@@ -17,9 +19,11 @@ const signInFormSchema = yup.object().shape({
 });
 
 export default function SignIn() {
+  const { signIn } = useContext(AuthContext);
+
   const [session] = useSession();
   const router = useRouter();
-  
+
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(signInFormSchema),
   });
@@ -27,7 +31,9 @@ export default function SignIn() {
   const { errors } = formState;
 
   const handleSignIn: SubmitHandler<SignInFormData> = async (value) => {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    event.preventDefault()
+    const { email, password } = value;
+    await signIn({ email, password});
   };
 
   if(session){
@@ -75,7 +81,7 @@ export default function SignIn() {
             mt="6"
             colorScheme="cyan"
             size="lg"
-            onClick={() => signIn("github")}
+            onClick={() => signInGit("github")}
           >
             Entrar com GitHub
           </Button>
