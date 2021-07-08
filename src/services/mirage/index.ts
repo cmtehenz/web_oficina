@@ -146,7 +146,7 @@ export function makeServer(){
 
     routes(){
       this.namespace = 'api';
-      this.timing = 750;
+      this.timing = 1000;
 
       this.get('/users', function(schema, request) {
         const { page = 1, per_page = 10 } = request.queryParams
@@ -188,6 +188,7 @@ export function makeServer(){
       });
 
       this.namespace = '';
+      this.passthrough('http://localhost:3333/sessions');
       this.passthrough();
     }
   })
