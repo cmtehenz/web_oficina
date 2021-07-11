@@ -189,6 +189,7 @@ export function makeServer(){
 
       this.namespace = '';
       this.passthrough('http://localhost:3333/sessions');
+      this.passthrough('http://localhost:3333/me');
       this.passthrough();
     }
   })
