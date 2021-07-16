@@ -1,6 +1,5 @@
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
-import { useEffect } from "react";
-import { useContext } from "react";
+import { useEffect, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { apiAuth } from "../../services/api";
 
