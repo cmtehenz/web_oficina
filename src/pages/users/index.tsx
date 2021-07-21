@@ -24,9 +24,10 @@ import { QueryClient } from "react-query";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
-import api from "../../services/api";
+import api, { setupApiClient } from "../../services/api";
 import { useUsers } from "../../services/hooks/useUsers";
 import { queryClient } from "../../services/queryClient";
+import { withSSRAuth } from "../../utils/withSSRAuth";
 
 
 export default function UserList() {
@@ -144,3 +145,13 @@ export default function UserList() {
     </Box>
   );
 }
+
+export const getServerSideProps = withSSRAuth(async (ctx) => {
+  const apiClient = setupApiClient(ctx);
+  const response = await apiClient.get('/me');
+  console.log(response.data);
+
+  return {
+    props: {}
+  }
+})
