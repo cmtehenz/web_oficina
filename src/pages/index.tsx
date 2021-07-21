@@ -7,6 +7,8 @@ import { signIn as signInGit, useSession } from "next-auth/client";
 import { useRouter } from 'next/router'
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import { GetServerSideProps } from "next";
+import { parseCookies } from 'nookies';
 
 type SignInFormData = {
   email: string;
@@ -89,4 +91,21 @@ export default function SignIn() {
       </Flex>
     </Flex>
   );
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const cookies = parseCookies(ctx);
+
+  if(cookies['flygo.token']){
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
 }

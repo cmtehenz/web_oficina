@@ -10,9 +10,7 @@ interface ProfileProps {
 export function Profile({ showProfileData = true }: ProfileProps) {
   const { user } = useContext(AuthContext);
 
-  // useEffect(() => {
-  //   apiAuth.get('/me').then(response => console.log(response))
-  // }, [])
+
 
   return (
     <Flex align="center">
