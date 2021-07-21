@@ -5,25 +5,14 @@ import Logo from "./Logo";
 import NotificationsNav from "./NotificationsNav";
 import { Profile } from "./Profile";
 import SearchBox from "./SearchBox";
-import { useSession } from "next-auth/client";
-import { useRouter } from 'next/router'
-
 
 export function Header() {
   const { onOpen } = useSidebarDrawer();
-
-  const router = useRouter();
-
-  const [session] = useSession();
 
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
   });
-
-  if(!session){
-    //router.push('/')
-  }
 
   return (
     <Flex
