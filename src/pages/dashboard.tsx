@@ -1,8 +1,11 @@
 import { Flex, SimpleGrid, Box, Text, theme } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { destroyCookie } from "nookies";
+import { useContext } from "react";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
+import { AuthContext } from "../contexts/AuthContext";
+import { useCan } from "../hooks/useCan";
 import { setupApiClient } from "../services/api";
 import { AuthTokenError } from "../services/errors/AuthTokenError";
 import { withSSRAuth } from "../utils/withSSRAuth";
@@ -62,6 +65,12 @@ const options = {
 const series = [{ name: "series1", data: [31, 120, 10, 28, 61, 18, 109] }];
 
 export default function Dashboard() {
+  const { user, isAuthenticated } = useContext(AuthContext);
+
+  const userCanSeeMetrics = useCan({
+    permissions: ['metrics.list']
+  })
+
   return (
     <Flex direction="column" h="100vh">
       <Header />
@@ -70,6 +79,7 @@ export default function Dashboard() {
 
         <SimpleGrid flex="1" gap="4" minChildWidth="320px" align="flex-start">
           <Box p={["6", "8"]} bg="gray.800" borderRadius={8} pb="4">
+            {/* { userCanSeeMetrics && <div>Métricas</div> } */}
             <Text fontSize="lg" mb="4">
               Inscritos da Semana
             </Text>
