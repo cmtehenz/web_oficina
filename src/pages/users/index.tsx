@@ -18,8 +18,7 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useState } from "react";
-import { RiAddLine, RiPencilLine, RiUserReceived2Fill } from "react-icons/ri";
-import { QueryClient } from "react-query";
+import { RiAddLine, RiPencilLine } from "react-icons/ri";
 
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
@@ -149,9 +148,13 @@ export default function UserList() {
 export const getServerSideProps = withSSRAuth(async (ctx) => {
   const apiClient = setupApiClient(ctx);
   const response = await apiClient.get('/me');
-  console.log(response.data);
+
+
 
   return {
     props: {}
   }
+}, {
+  permissions: ['metrics.list'],
+  roles: ['administrator'],
 })
