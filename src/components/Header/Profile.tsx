@@ -7,7 +7,7 @@ interface ProfileProps {
 }
 
 export function Profile({ showProfileData = true }: ProfileProps) {
-  const { user } = useContext(AuthContext);
+  const { user, signOut } = useContext(AuthContext);
 
   return (
     <Flex align="center">
@@ -19,12 +19,14 @@ export function Profile({ showProfileData = true }: ProfileProps) {
           </Text>
         </Box>
       )}
+      <button onClick={signOut}>
+        <Avatar
+          size="md"
+          name="Gustavo Costa"
+          src="https://github.com/cmtehenz.png"
+        />
+      </button>
 
-      <Avatar
-        size="md"
-        name="Gustavo Costa"
-        src="https://github.com/cmtehenz.png"
-      />
     </Flex>
   );
 }
